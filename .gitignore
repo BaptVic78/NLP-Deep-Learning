@@ -1,0 +1,9 @@
+venv/
+.venv*/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+Lab-Activity-3.pdf
+TP3-2-Fake-News-Detection/fakenews_vecs.tsv
+TP3-2-Fake-News-Detection/fakenews_meta.tsv
+*.log
