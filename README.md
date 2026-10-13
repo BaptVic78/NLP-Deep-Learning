@@ -1,36 +1,39 @@
-# RNN / LSTM lab
+# RNN / LSTM text-classification lab
 
-Three exercises, with their original notebooks and a local Streamlit interface:
+Visualization of two existing exercises:
 
-1. Google opening-price prediction from a window of 60 observed prices, using four LSTM layers.
-2. Fake-news dataset classification using Embedding and bidirectional LSTM layers.
-3. Six-class emotion classification using Embedding and bidirectional LSTM layers.
+- **Fake-news dataset classification**: Embedding → BiLSTM(64) → BiLSTM(16) → Dense layers.
+- **Emotion classification**: Embedding → BiLSTM(64) → BiLSTM(32) → six-class softmax.
 
-## Run on Ubuntu
+These LSTM architectures are already implemented in the original notebooks, which remain unchanged. The added Python scripts make their steps explicit and save models for Streamlit. No stock-price exercise is included in the current project.
+
+## Run locally on Ubuntu
 
 ```bash
-bash install.sh
+cd /home/victor/NLP/lab3-RNN
+bash install.sh  # first installation only
 bash run.sh
 ```
 
-Open http://localhost:8504. The prepared models are loaded without training on each click.
+Open http://localhost:8504. Stop the interface with Ctrl+C. Prepared models are loaded without retraining on each click.
 
 ## Train
 
-The scripts follow the notebooks in a straightforward order: load, clean/scale, split, build the model, train, evaluate and save.
-
 ```bash
-venv/bin/python train_stock.py
 venv/bin/python train_news.py
 venv/bin/python train_emotions.py
 ```
 
-Training duration can be changed with `EPOCHS`. News and emotion training can be limited with `SAMPLES` for a quick demonstration; the interface displays the sample sizes and actual training history. Defaults follow the notebook epoch counts. Prepared demonstration runs may use fewer epochs and are identified in their reports.
+The scripts follow: load → clean → split → tokenizer → padding → notebook model → train → evaluate → save. Defaults use ten epochs. EPOCHS and SAMPLES can limit a quick CPU demonstration; the interface shows the actual sizes and epochs. The prepared runs use three epochs, 6000 news samples and 8000 emotion training samples.
 
-The notebooks remain unchanged. The news notebook has a linear output and a loss configured with `from_logits=True`; inference applies sigmoid and thresholds the resulting probability at 0.5. The saved report computes metrics with true labels first, correcting the notebook's reversed metric arguments.
+## Visualization
 
-Stock predictions are rolling one-step predictions using the previous observed prices, not a forecast of all future days from one initial window. A last-observation baseline is displayed. Historical prices are provided for this educational exercise; this is not a trading recommendation.
+Enter English text, inspect its predicted dataset class or emotion, and view class scores. Evaluation includes test accuracy, macro F1, confusion matrices and actual training/validation curves. The method tab explains the existing architecture.
 
-The fake-news labels describe the supplied dataset. A model score is not a factual verification of an arbitrary article. All text input is in English.
+News labels describe this dataset; the interface is not a factual verification service. Probabilities are model scores, not calibrated guarantees. The news notebook's linear output is a logit: sigmoid is applied before thresholding at 0.5. Metrics use true labels first, correcting reversed arguments in the notebook's evaluation cells.
 
-The course PDF and generated embedding TSVs are excluded from version control. The original CSV inputs and notebooks are preserved.
+Normalization and duplicate/conflict removal occur before splitting; the tokenizer is fitted only on train. Emotion uses the official validation/test splits, with normalized duplicates and overlaps removed.
+
+The original notebooks are the reference for your lab work. The saved demo models are newly trained from their architectures, not recovered from runtime memory. The TSVs contain embeddings only and cannot replace a complete model.
+
+The course PDF and generated embedding TSVs are excluded from Git. CSV inputs and prepared models are included to reproduce the visualization locally.
