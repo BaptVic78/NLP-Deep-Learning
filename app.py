@@ -1,4 +1,4 @@
-"""Visualize the three existing notebook models, using prepared local files."""
+"""Visualize the two existing notebook exercises, using prepared local files."""
 from pathlib import Path
 import os
 os.environ.setdefault('TF_NUM_INTRAOP_THREADS','2')
@@ -13,8 +13,8 @@ from text_cleaning import normalize_text
 
 root = Path(__file__).resolve().parent
 out = root/'artifacts'
-st.set_page_config(page_title='RNN / LSTM lab',layout='wide')
-st.title('RNN / LSTM lab')
+st.set_page_config(page_title='NLP Deep Learning',layout='wide')
+st.title('NLP Deep Learning — Text Classification')
 st.write('Two notebook exercises, with their inputs, predictions and measured results.')
 task = st.sidebar.radio('Exercise',['Fake-news dataset','Emotions'])
 key = 'news' if task == 'Fake-news dataset' else 'emotions'

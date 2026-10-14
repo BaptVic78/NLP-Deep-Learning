@@ -1,4 +1,4 @@
-# RNN / LSTM text-classification lab
+# NLP Deep Learning — Text Classification
 
 Visualization of two existing exercises:
 
